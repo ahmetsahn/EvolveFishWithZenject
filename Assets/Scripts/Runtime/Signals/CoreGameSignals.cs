@@ -6,4 +6,9 @@ namespace Runtime.Signals
     {
         public GameStates GameStates;
     }
+    
+    public struct OnResetGameSignal
+    {
+        
+    }
 }

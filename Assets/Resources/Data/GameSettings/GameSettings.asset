@@ -15,7 +15,7 @@ MonoBehaviour:
   gameInstaller:
     BaitFacadePrefab: {fileID: 875949293067620517, guid: b5517a93fd575bf498bc8986d3a37c27, type: 3}
   baitSpawnerData:
-    SpawnInterval: 0.3
+    SpawnInterval: 2
     MinX: -10
     MaxX: 10
     Y: 7

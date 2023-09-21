@@ -10,7 +10,7 @@ namespace Runtime.BaitSystem
     {
         private readonly BaitFacade.Factory _baitFactory;
         
-        private readonly Settings _spawnerData;
+        private readonly SpawnerData _spawnerData;
         
         private readonly GameManager _gameManager;
         
@@ -20,7 +20,7 @@ namespace Runtime.BaitSystem
         
         public BaitSpawner(
             BaitFacade.Factory baitFactory, 
-            Settings spawnerData,
+            SpawnerData spawnerData,
             GameManager gameManager,
             SignalBus signalBus)
         {
@@ -74,7 +74,7 @@ namespace Runtime.BaitSystem
         }
         
         [Serializable]
-        public struct Settings
+        public struct SpawnerData
         {
             public float SpawnInterval;
             public float MinX;

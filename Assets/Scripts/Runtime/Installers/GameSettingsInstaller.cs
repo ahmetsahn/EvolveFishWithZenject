@@ -14,7 +14,7 @@ namespace Runtime.Installers
         private GameInstaller.Settings gameInstaller;
         
         [SerializeField]
-        private BaitSpawner.Settings baitSpawnerData;
+        private BaitSpawner.SpawnerData baitSpawnerData;
         
         [SerializeField]
         private LevelPanelHandler.Settings levelPanelSettings;

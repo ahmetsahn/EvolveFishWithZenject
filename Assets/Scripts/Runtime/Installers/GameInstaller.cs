@@ -27,7 +27,7 @@ namespace Runtime.Installers
             
             Container.Bind<AudioPlayer>().AsSingle();
             
-            Container.Bind<BaitRegistry>().AsSingle();
+            Container.BindInterfacesAndSelfTo<BaitRegistry>().AsSingle();
             
             GameSignalsInstaller.Install(Container);
             

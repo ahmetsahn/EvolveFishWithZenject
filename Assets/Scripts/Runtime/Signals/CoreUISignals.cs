@@ -18,8 +18,5 @@ namespace Runtime.Signals
         
     }
     
-    public struct OnResetGameSignal
-    {
-        
-    }
+    
 }
