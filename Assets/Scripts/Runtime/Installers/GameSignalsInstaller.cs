@@ -44,6 +44,8 @@ namespace Runtime.Installers
             Container.DeclareSignal<OnLevelStartSignal>();
             Container.DeclareSignal<OnUpdateStageIndexSignal>();
             Container.DeclareSignal<OnLevelDestroySignal>();
+            Container.DeclareSignal<OnNextLevelSignal>();
+            Container.DeclareSignal<OnRestartLevelSignal>();
         }
 
         private void InputSignals()

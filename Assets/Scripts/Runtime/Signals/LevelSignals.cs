@@ -16,6 +16,16 @@ namespace Runtime.Signals
     {
         
     }
+
+    public struct OnNextLevelSignal
+    {
+        
+    }
+
+    public struct OnRestartLevelSignal
+    {
+        
+    }
     
     
     

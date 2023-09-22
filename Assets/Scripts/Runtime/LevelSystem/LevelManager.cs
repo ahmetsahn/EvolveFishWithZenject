@@ -59,7 +59,8 @@ namespace Runtime.LevelSystem
         {
             _signalBus.Subscribe<OnLevelStartSignal>(OnLevelStart);
             _signalBus.Subscribe<OnLevelDestroySignal>(OnLevelDestroy);
-            _signalBus.Subscribe<OnNextLevelButtonClickSignal>(OnNextLevelButtonClick);
+            _signalBus.Subscribe<OnNextLevelSignal>(OnNextLevel);
+            _signalBus.Subscribe<OnRestartLevelSignal>(OnRestartLevel);
             _signalBus.Subscribe<OnResetGameSignal>(OnResetGame);
         }
         
@@ -74,11 +75,32 @@ namespace Runtime.LevelSystem
             _levelDestroyerCommand.Execute();
         }
         
-        private void OnNextLevelButtonClick()
+        private void OnNextLevel()
         {
+            _currentLevelIndex++;
+            
             _signalBus.Fire<OnResetGameSignal>();
             
-            _currentLevelIndex++;
+            _signalBus.Fire(new OnChangeGameStatesSignal()
+            {
+                GameStates = GameStates.Playing
+            });
+            
+            _signalBus.Fire(new OnOpenPanelSignal()
+            {
+                PanelType = UIPanelTypes.LevelPanel,
+                PanelIndex = 0
+            });
+            
+            _signalBus.Fire(new OnLevelStartSignal()
+            {
+                LevelIndex = _currentLevelIndex
+            });
+        }
+        
+        private void OnRestartLevel()
+        {
+            _signalBus.Fire<OnResetGameSignal>();
             
             _signalBus.Fire(new OnChangeGameStatesSignal()
             {
@@ -109,7 +131,8 @@ namespace Runtime.LevelSystem
         {
             _signalBus.Unsubscribe<OnLevelStartSignal>(OnLevelStart);
             _signalBus.Unsubscribe<OnLevelDestroySignal>(OnLevelDestroy);
-            _signalBus.Unsubscribe<OnNextLevelButtonClickSignal>(OnNextLevelButtonClick);
+            _signalBus.Unsubscribe<OnNextLevelSignal>(OnNextLevel);
+            _signalBus.Unsubscribe<OnRestartLevelSignal>(OnRestartLevel);
             _signalBus.Unsubscribe<OnResetGameSignal>(OnResetGame);
         }
         

@@ -55,6 +55,13 @@ namespace Runtime.Main
                     break;
                 
                 case GameStates.Lose:
+                    _signalBus.Fire<OnLevelDestroySignal>();
+                    _signalBus.Fire<OnCloseAllPanelsSignal>();
+                    _signalBus.Fire(new OnOpenPanelSignal
+                    {
+                        PanelType = UIPanelTypes.LosePanel, 
+                        PanelIndex = 1
+                    });
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
