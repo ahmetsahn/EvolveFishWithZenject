@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Runtime.Signals
 {
     public struct OnSetNewLevelValueSignal

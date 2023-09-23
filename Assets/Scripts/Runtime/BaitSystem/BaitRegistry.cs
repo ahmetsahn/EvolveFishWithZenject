@@ -6,32 +6,29 @@ using Zenject;
 
 namespace Runtime.BaitSystem
 {
-    public class BaitRegistry : IInitializable, IDisposable
+    public class BaitRegistry : IDisposable
     {
-        private readonly List<BaitFacade> _baits = new();
+        private readonly List<BaitFacade> _baitFacadesList = new();
         
-        public IEnumerable<BaitFacade> Baits => _baits;
+        public IEnumerable<BaitFacade> BaitFacadesList => _baitFacadesList;
         
         private readonly SignalBus _signalBus;
         
         public BaitRegistry(SignalBus signalBus)
         {
             _signalBus = signalBus;
+            
+            SubscribeEvents();
         }
         
         public void AddBait(BaitFacade bait)
         {
-            _baits.Add(bait);
+            _baitFacadesList.Add(bait);
         }
 
         public void RemoveBait(BaitFacade bait)
         {
-            _baits.Remove(bait);
-        }
-
-        public void Initialize()
-        {
-            SubscribeEvents();
+            _baitFacadesList.Remove(bait);
         }
         
         private void SubscribeEvents()
@@ -41,9 +38,9 @@ namespace Runtime.BaitSystem
         
         private void OnResetGame()
         {
-            for(var i = _baits.Count - 1; i >= 0; i--)
+            for(var i = _baitFacadesList.Count - 1; i >= 0; i--)
             {
-                _baits[i].Dispose();
+                _baitFacadesList[i].Dispose();
             }
         }
         

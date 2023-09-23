@@ -8,7 +8,6 @@ namespace Runtime.Installers
     {
         public override void InstallBindings()
         {
-            Container.Bind<EnemyTunables>().AsSingle();
             Container.BindInterfacesAndSelfTo<BaitDestroyHandler>().AsSingle();
             Container.BindInterfacesAndSelfTo<BaitPhysicHandler>().AsSingle();
         }

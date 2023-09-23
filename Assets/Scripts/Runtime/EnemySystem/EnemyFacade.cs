@@ -8,13 +8,13 @@ namespace Runtime.EnemySystem
     {
         private IMemoryPool _pool;
         
-        private EnemyView _view;
+        private EnemyView _enemyView;
         
-        private EnemyRegistry _registry;
+        private EnemyRegistry _enemyRegistry;
         
-        private EnemyDestroyHandler _destroyHandler;
+        private EnemyDestroyHandler _enemyDestroyHandler;
         
-        private EnemyTunable _tunable;
+        private EnemyTunable _enemyTunable;
         
         [Inject]
         public void Construct(
@@ -23,32 +23,38 @@ namespace Runtime.EnemySystem
             EnemyDestroyHandler destroyHandler,
             EnemyTunable tunable)
         {
-            _view = view;
-            _registry = registry;
-            _destroyHandler = destroyHandler;
-            _tunable = tunable;
+            _enemyView = view;
+            _enemyRegistry = registry;
+            _enemyDestroyHandler = destroyHandler;
+            _enemyTunable = tunable;
         }
         
         public Vector3 Position
         {
-            get => _view.Position;
-            set => _view.Position = value;
+            get => _enemyView.Position;
+            set => _enemyView.Position = value;
         }
         
         public int ScoreValue
         {
-            get => _tunable.FishScore;
+            get => _enemyTunable.FishScore;
+        }
+        
+        public bool IsEatable
+        {
+            get => _enemyView.IsEatable;
+            set => _enemyView.IsEatable = value;
         }
         public void OnDespawned()
         {
-            _registry.RemoveBait(this);
+            _enemyRegistry.RemoveBait(this);
             _pool = null;
         }
 
         public void OnSpawned(IMemoryPool pool)
         {
             _pool = pool;
-            _registry.AddBait(this);
+            _enemyRegistry.AddBait(this);
         }
 
         public void Dispose()
@@ -58,7 +64,7 @@ namespace Runtime.EnemySystem
         
         public void Destroy()
         {
-            _destroyHandler.Destroy();
+            _enemyDestroyHandler.Destroy();
         }
         
         public class Factory : PlaceholderFactory<EnemyFacade>

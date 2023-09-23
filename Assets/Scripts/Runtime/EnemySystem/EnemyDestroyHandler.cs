@@ -6,31 +6,31 @@ namespace Runtime.EnemySystem
 {
     public class EnemyDestroyHandler
     {
-        private readonly EnemyFacade _facade;
+        private readonly EnemyFacade _enemyFacade;
         
-        private readonly Settings _settings;
+        private readonly EnemyDestroyData _enemyDestroyData;
         
         private readonly AudioPlayer _audioPlayer;
         
         
         public EnemyDestroyHandler(
-            EnemyFacade facade, 
-            Settings settings,
+            EnemyFacade enemyFacade, 
+            EnemyDestroyData enemyDestroyData,
             AudioPlayer audioPlayer)
         {
-            _facade = facade;
-            _settings = settings;
+            _enemyFacade = enemyFacade;
+            _enemyDestroyData = enemyDestroyData;
             _audioPlayer = audioPlayer;
         }
         
         public void Destroy()
         {
-            _audioPlayer.Play(_settings.DestroySound, _settings.DestroySoundVolume);
-            _facade.Dispose();
+            _audioPlayer.Play(_enemyDestroyData.DestroySound, _enemyDestroyData.DestroySoundVolume);
+            _enemyFacade.Dispose();
         }
         
         [Serializable]
-        public class Settings
+        public class EnemyDestroyData
         {
             public AudioClip DestroySound;
             

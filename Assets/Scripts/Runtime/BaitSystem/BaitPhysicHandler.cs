@@ -6,17 +6,17 @@ namespace Runtime.BaitSystem
     {
         private const string GROUND_TAG = "Ground";
         
-        private readonly BaitFacade _facade;
+        private readonly BaitFacade _baitFacade;
         
-        public BaitPhysicHandler(BaitFacade facade)
+        public BaitPhysicHandler(BaitFacade baitFacade)
         {
-            _facade = facade;
+            _baitFacade = baitFacade;
         }
         public void OnTriggerEnter2D(Collider2D other)
         {
             if (other.CompareTag(GROUND_TAG))
             {
-                _facade.Dispose();
+                _baitFacade.Dispose();
             }
         }
     }

@@ -12,5 +12,11 @@ namespace Runtime.EnemySystem
             get => enemyTransform.position;
             set => enemyTransform.position = value;
         }
+        
+        public bool IsEatable
+        {
+            get;
+            set;
+        }
     }
 }

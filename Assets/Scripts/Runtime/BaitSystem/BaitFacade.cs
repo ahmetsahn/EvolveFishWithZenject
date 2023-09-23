@@ -8,51 +8,51 @@ namespace Runtime.BaitSystem
     {
         private IMemoryPool _pool;
         
-        private BaitView _view;
+        private BaitView _baitView;
         
-        private BaitRegistry _registry;
+        private BaitRegistry _baitRegistry;
         
-        private BaitDestroyHandler _destroyHandler;
+        private BaitDestroyHandler _baitDestroyHandler;
         
-        private BaitTunable _tunable;
+        private BaitTunable _baitTunable;
         
-        private BaitPhysicHandler _physicHandler;
+        private BaitPhysicHandler _baitPhysicHandler;
         
         
         [Inject]
         public void Construct(
-            BaitView view, 
-            BaitRegistry registry, 
-            BaitDestroyHandler destroyHandler,
-            BaitTunable tunable,
-            BaitPhysicHandler physicHandler)
+            BaitView baitView, 
+            BaitRegistry baitRegistry, 
+            BaitDestroyHandler baitDestroyHandler,
+            BaitTunable baitTunable,
+            BaitPhysicHandler baitPhysicHandler)
         {
-            _view = view;
-            _registry = registry;
-            _destroyHandler = destroyHandler;
-            _tunable = tunable;
-            _physicHandler = physicHandler;
+            _baitView = baitView;
+            _baitRegistry = baitRegistry;
+            _baitDestroyHandler = baitDestroyHandler;
+            _baitTunable = baitTunable;
+            _baitPhysicHandler = baitPhysicHandler;
         }
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            _physicHandler.OnTriggerEnter2D(other);
+            _baitPhysicHandler.OnTriggerEnter2D(other);
         }
 
         public Vector3 Position
         {
-            get => _view.Position;
-            set => _view.Position = value;
+            get => _baitView.Position;
+            set => _baitView.Position = value;
         }
 
         public int ScoreValue
         {
-            get => _tunable.BaitScore;
+            get => _baitTunable.BaitScore;
         }
         
         public void OnDespawned()
         {
-            _registry.RemoveBait(this);
+            _baitRegistry.RemoveBait(this);
             _pool = null;
         }
 
@@ -60,7 +60,7 @@ namespace Runtime.BaitSystem
         {
             _pool = pool;
             
-            _registry.AddBait(this);
+            _baitRegistry.AddBait(this);
         }
 
         public void Dispose()
@@ -70,7 +70,7 @@ namespace Runtime.BaitSystem
 
         public void Destroy()
         {
-            _destroyHandler.Destroy();
+            _baitDestroyHandler.Destroy();
         }
         
         public class Factory : PlaceholderFactory<BaitFacade>

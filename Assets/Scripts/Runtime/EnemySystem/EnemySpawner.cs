@@ -9,14 +9,14 @@ namespace Runtime.EnemySystem
     {
         private readonly EnemyFacade.Factory _enemyFactory;
         
-        private readonly Settings _spawnerData;
+        private readonly EnemySpawnerData _enemySpawnerData;
         
         private float _lastSpawnTime;
         
-        public EnemySpawner(EnemyFacade.Factory enemyFactory, Settings spawnerData)
+        public EnemySpawner(EnemyFacade.Factory enemyFactory, EnemySpawnerData enemySpawnerData)
         {
             _enemyFactory = enemyFactory;
-            _spawnerData = spawnerData;
+            _enemySpawnerData = enemySpawnerData;
         }
         public void Initialize()
         {
@@ -25,7 +25,7 @@ namespace Runtime.EnemySystem
 
         public void Tick()
         {
-            if(Time.realtimeSinceStartup - _lastSpawnTime > _spawnerData.SpawnInterval)
+            if(Time.realtimeSinceStartup - _lastSpawnTime > _enemySpawnerData.SpawnInterval)
             {
                 SpawnBait();
             }
@@ -41,8 +41,8 @@ namespace Runtime.EnemySystem
         private Vector2 ChooseRandomStartPosition()
         {
             var side = Random.Range(0, 2);
-            var randomX = side == 0 ? _spawnerData.X : -_spawnerData.X;
-            var randomY = Random.Range(_spawnerData.MinY, _spawnerData.MaxY);
+            var randomX = side == 0 ? _enemySpawnerData.X : -_enemySpawnerData.X;
+            var randomY = Random.Range(_enemySpawnerData.MinY, _enemySpawnerData.MaxY);
             return new Vector3(randomX, randomY);
         }
 
@@ -62,7 +62,7 @@ namespace Runtime.EnemySystem
         }
         
         [Serializable]
-        public struct Settings
+        public struct EnemySpawnerData
         {
             public float SpawnInterval;
             public float X;

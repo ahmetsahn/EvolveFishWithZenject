@@ -14,15 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameInstaller:
     BaitFacadePrefab: {fileID: 875949293067620517, guid: b5517a93fd575bf498bc8986d3a37c27, type: 3}
+    EnemyFacadePrefabs:
+    - {fileID: 3180839763339146532, guid: 60d8f3eaf813dd84db9a69c950bc17e3, type: 3}
+    - {fileID: 7534848932710606470, guid: 94f537079240d1b4d959fce334998b89, type: 3}
+    - {fileID: 7032004119816644172, guid: a0ab6e79f332e404793bc93a4e1c8220, type: 3}
   baitSpawnerData:
     SpawnInterval: 2
     MinX: -10
     MaxX: 10
     Y: 7
+  enemyEnemySpawnerData:
+    SpawnInterval: 2
+    X: 13
+    MinY: -3
+    MaxY: 4
   levelPanelSettings:
     stageValues: 0a0000001900000064000000
   baitSettings:
-    BaitDestroyHandlerSettings:
+    baitDestroyHandlerBaitDestroyData:
       DestroySound: {fileID: 8300000, guid: 7d7c0e65dacd54149aafa11f22c5974f, type: 3}
       DestroySoundVolume: 1
     baitTunable:
@@ -30,3 +39,9 @@ MonoBehaviour:
   playerSettings:
     PlayerMovementData:
       MoveSpeed: 3
+  enemySettings:
+    enemyDestroyHandlerEnemyDestroyData:
+      DestroySound: {fileID: 8300000, guid: 7d7c0e65dacd54149aafa11f22c5974f, type: 3}
+      DestroySoundVolume: 1
+    EnemyTunable:
+      FishScore: 0
