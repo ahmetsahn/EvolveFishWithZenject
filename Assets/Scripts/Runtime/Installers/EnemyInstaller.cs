@@ -8,6 +8,7 @@ namespace Runtime.Installers
         public override void InstallBindings()
         {
             Container.BindInterfacesAndSelfTo<EnemyDestroyHandler>().AsSingle();
+            Container.BindInterfacesAndSelfTo<EnemyMoveHandler>().AsSingle();
         }
     }
 

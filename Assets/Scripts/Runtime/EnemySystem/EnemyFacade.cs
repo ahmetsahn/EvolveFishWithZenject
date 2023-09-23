@@ -35,6 +35,12 @@ namespace Runtime.EnemySystem
             set => _enemyView.Position = value;
         }
         
+        public Vector3 Direction
+        {
+            get => _enemyView.Direction;
+            set => _enemyView.Direction = value;
+        }
+        
         public int ScoreValue
         {
             get => _enemyTunable.FishScore;

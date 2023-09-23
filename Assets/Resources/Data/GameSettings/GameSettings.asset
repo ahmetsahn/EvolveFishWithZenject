@@ -43,5 +43,7 @@ MonoBehaviour:
     enemyDestroyHandlerEnemyDestroyData:
       DestroySound: {fileID: 8300000, guid: 7d7c0e65dacd54149aafa11f22c5974f, type: 3}
       DestroySoundVolume: 1
+    enemyMoveHandlerEnemyMoveData:
+      Speed: 4
     EnemyTunable:
       FishScore: 0

@@ -50,6 +50,7 @@ namespace Runtime.Installers
         public class EnemySetting
         {
             public EnemyDestroyHandler.EnemyDestroyData enemyDestroyHandlerEnemyDestroyData;
+            public EnemyMoveHandler.EnemyMoveData enemyMoveHandlerEnemyMoveData;
             public EnemyTunable EnemyTunable;
         }
         
@@ -66,6 +67,7 @@ namespace Runtime.Installers
             Container.BindInstance(playerSettings.PlayerMovementData).IfNotBound();
             
             Container.BindInstance(enemySettings.enemyDestroyHandlerEnemyDestroyData).IfNotBound();
+            Container.BindInstance(enemySettings.enemyMoveHandlerEnemyMoveData).IfNotBound();
             Container.BindInstance(enemySettings.EnemyTunable).IfNotBound();
         }
     }

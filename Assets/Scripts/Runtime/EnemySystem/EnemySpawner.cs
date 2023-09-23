@@ -34,7 +34,9 @@ namespace Runtime.EnemySystem
         private void SpawnBait()
         {
             var enemyFacade = _enemyFactory.Create();
-            enemyFacade.Position = ChooseRandomStartPosition();
+            var randomPosition = ChooseRandomStartPosition();
+            enemyFacade.Position = randomPosition;
+            enemyFacade.Direction = randomPosition.x > 0 ? Vector3.left : Vector3.right;
             _lastSpawnTime = Time.realtimeSinceStartup;
         }
         

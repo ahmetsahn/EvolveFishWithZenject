@@ -13,6 +13,12 @@ namespace Runtime.EnemySystem
             set => enemyTransform.position = value;
         }
         
+        public Vector3 Direction
+        {
+            get => enemyTransform.right;
+            set => enemyTransform.right = value;
+        }
+        
         public bool IsEatable
         {
             get;
