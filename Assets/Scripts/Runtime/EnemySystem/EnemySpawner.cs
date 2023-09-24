@@ -5,7 +5,7 @@ using Random = UnityEngine.Random;
 
 namespace Runtime.EnemySystem
 {
-    public class EnemySpawner : IInitializable, ITickable, IDisposable
+    public class EnemySpawner : ITickable
     {
         private readonly EnemyFacade.Factory _enemyFactory;
         
@@ -18,25 +18,21 @@ namespace Runtime.EnemySystem
             _enemyFactory = enemyFactory;
             _enemySpawnerData = enemySpawnerData;
         }
-        public void Initialize()
-        {
-            SubscribeEvents();
-        }
-
+        
         public void Tick()
         {
             if(Time.realtimeSinceStartup - _lastSpawnTime > _enemySpawnerData.SpawnInterval)
             {
-                SpawnBait();
+                SpawnEnemy();
             }
         }
         
-        private void SpawnBait()
+        private void SpawnEnemy()
         {
             var enemyFacade = _enemyFactory.Create();
-            var randomPosition = ChooseRandomStartPosition();
-            enemyFacade.Position = randomPosition;
-            enemyFacade.Direction = randomPosition.x > 0 ? Vector3.left : Vector3.right;
+            var startPosition = ChooseRandomStartPosition();
+            enemyFacade.Position = startPosition;
+            enemyFacade.Direction = startPosition.x > 0 ? Vector3.left : Vector3.right;
             _lastSpawnTime = Time.realtimeSinceStartup;
         }
         
@@ -46,21 +42,6 @@ namespace Runtime.EnemySystem
             var randomX = side == 0 ? _enemySpawnerData.X : -_enemySpawnerData.X;
             var randomY = Random.Range(_enemySpawnerData.MinY, _enemySpawnerData.MaxY);
             return new Vector3(randomX, randomY);
-        }
-
-        public void Dispose()
-        {
-            UnsubscribeEvents();
-        }
-        
-        private void SubscribeEvents()
-        {
-            
-        }
-        
-        private void UnsubscribeEvents()
-        {
-            
         }
         
         [Serializable]

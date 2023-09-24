@@ -4,7 +4,6 @@ using Runtime.EnemySystem;
 using Runtime.PlayerSystem;
 using Runtime.UISystem;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 namespace Runtime.Installers
@@ -22,7 +21,7 @@ namespace Runtime.Installers
         private EnemySpawner.EnemySpawnerData enemyEnemySpawnerData;
         
         [SerializeField]
-        private LevelPanelHandler.Settings levelPanelSettings;
+        private LevelPanelHandler.Settings[] levelPanelSettings;
         
         [SerializeField]
         private BaitSettings baitSettings;

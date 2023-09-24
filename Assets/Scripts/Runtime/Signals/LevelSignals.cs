@@ -2,27 +2,22 @@ using System;
 
 namespace Runtime.Signals
 {
-    public struct OnLevelStartSignal
+    public struct LevelStartSignal
     {
         public int LevelIndex;
     }
     
-    public struct OnUpdateStageIndexSignal
-    {
-        public int StageIndex;
-    }
-    
-    public struct OnLevelDestroySignal
+    public struct LevelDestroySignal
     {
         
     }
 
-    public struct OnNextLevelSignal
+    public struct NextLevelSignal
     {
         
     }
 
-    public struct OnRestartLevelSignal
+    public struct RestartLevelSignal
     {
         
     }

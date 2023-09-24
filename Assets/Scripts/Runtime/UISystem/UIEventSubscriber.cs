@@ -53,17 +53,17 @@ namespace Runtime.UISystem
         
         private void OnNextLevel()
         {
-            _signalBus.Fire<OnNextLevelButtonClickSignal>();
+            _signalBus.Fire<NextLevelButtonClickSignal>();
         }
         
         private void OnRestartLevel()
         {
-            _signalBus.Fire<OnRestartLevelButtonClickSignal>();
+            _signalBus.Fire<RestartLevelButtonClickSignal>();
         }
         
         private void OnQuit()
         {
-            _signalBus.Fire<OnQuitButtonClickSignal>(); 
+            _signalBus.Fire<QuitButtonClickSignal>(); 
         }
         
         private void UnsubscribeEvents()

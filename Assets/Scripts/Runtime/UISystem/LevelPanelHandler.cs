@@ -1,5 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Assets.Scripts.Runtime.Signals;
+using Runtime.Enums;
 using Runtime.Main;
 using Runtime.Signals;
 using UnityEngine;
@@ -11,24 +14,29 @@ namespace Runtime.UISystem
     public class LevelPanelHandler : MonoBehaviour
     {
         [SerializeField] private Text levelText, scoreText;
-        
-        [SerializeField] private List<Image> stageImages = new();
+
+        [SerializeField] private Image[] stageImages;
+        [SerializeField] private List<Image> fishIcons;
         
         private int _stageIndex;
         private int _scoreValue;
+        private int _levelIndex;
 
         private SignalBus _signalBus;
+
+        private PlayerSignals _playerSignals;
         
-        private Settings _settings;
+        private Settings[] _settings;
         
         private const string LEVEL_TEXT = "Level : ";
         private const string SCORE_TEXT = "Score : ";
         
         [Inject]
-        public void Construct(SignalBus signalBus, Settings settings)
+        public void Construct(SignalBus signalBus, Settings[] settings, PlayerSignals playerSignals)
         {
             _signalBus = signalBus;
             _settings = settings;
+            _playerSignals = playerSignals;
         }
         private void OnEnable()
         {
@@ -37,55 +45,58 @@ namespace Runtime.UISystem
         
         private void SubscribeEvents()
         {
-            _signalBus.Subscribe<OnLevelStartSignal>(OnLevelStart);
-            _signalBus.Subscribe<OnIncreaseScoreSignal>(OnIncreaseScore);
-            _signalBus.Subscribe<OnUpdateStageImageFillAmountSignal>(OnUpdateStageImageFillAmount);
-            _signalBus.Subscribe<OnUpdateStageIndexSignal>(OnUpdateStageIndex);
-            _signalBus.Subscribe<OnResetGameSignal>(OnResetGame);
+            _signalBus.Subscribe<LevelStartSignal>(OnLevelStart);
+            _signalBus.Subscribe<IncreaseScoreSignal>(OnIncreaseScore);
+            _signalBus.Subscribe<UpdateStageImageFillAmountSignal>(OnUpdateStageImageFillAmount);
+            _signalBus.Subscribe<ResetGameSignal>(OnResetGame);
+
+            _playerSignals.GetPlayerFishTypeSignal += OnGetPlayerFishType;
         }
         
-        private void OnLevelStart(OnLevelStartSignal signal)
+        private void OnLevelStart(LevelStartSignal signal)
         {
-            _stageIndex = 0;
-            _scoreValue = 0;
-            
-            var levelValue = signal.LevelIndex + 1;
+            _levelIndex = signal.LevelIndex;
+
+            var levelValue = _levelIndex + 1;
             
             levelText.text = LEVEL_TEXT + levelValue;
             scoreText.text = SCORE_TEXT + _scoreValue;
+
+            for (int i = 0; i < fishIcons.Count; i++)
+            {
+                fishIcons[i].sprite = _settings[_levelIndex].FishIcons[i];
+            }
         }
         
-        private void OnIncreaseScore(OnIncreaseScoreSignal signal)
+        private void OnIncreaseScore(IncreaseScoreSignal signal)
         {
             _scoreValue += signal.ScoreValue;
             scoreText.text = SCORE_TEXT + _scoreValue;
         }
         
-        private void OnUpdateStageImageFillAmount(OnUpdateStageImageFillAmountSignal signal)
+        private void OnUpdateStageImageFillAmount(UpdateStageImageFillAmountSignal signal)
         {
             stageImages[_stageIndex].fillAmount += 
-                signal.FillAmount / _settings.stageValues[_stageIndex];
+                signal.FillAmount / _settings[_levelIndex].StageValues[_stageIndex];
 
             if (!(stageImages[_stageIndex].fillAmount >= 1)) return;
             
-            if (_settings.stageValues.Count - 1 == _stageIndex)
+            if (_settings[_levelIndex].StageValues.Count() - 1 == _stageIndex)
             {
-                _signalBus.Fire(new OnChangeGameStatesSignal
+                _signalBus.Fire(new ChangeGameStatesSignal
                 {
                     GameStates = GameStates.Win
                 });
                     
                 return;
             }
-                
+
+            _signalBus.Fire(new EvolvePlayerSignal
+            {
+                Sprite = _settings[_levelIndex].FishEvolveSprites[_stageIndex]
+            });
+
             _stageIndex++;
-            
-            _signalBus.Fire<OnUpdateStageIndexSignal>();
-        }
-        
-        private void OnUpdateStageIndex(OnUpdateStageIndexSignal signal)
-        {
-            signal.StageIndex = _stageIndex;
         }
         
         private void OnResetGame()
@@ -95,14 +106,20 @@ namespace Runtime.UISystem
             
             scoreText.text = SCORE_TEXT + _scoreValue;
         }
+
+        private FishType OnGetPlayerFishType()
+        {
+            return _settings[_levelIndex].PlayerTypes[_stageIndex];
+        }
         
         private void UnsubscribeEvents()
         {
-            _signalBus.Unsubscribe<OnLevelStartSignal>(OnLevelStart);
-            _signalBus.Unsubscribe<OnIncreaseScoreSignal>(OnIncreaseScore);
-            _signalBus.Unsubscribe<OnUpdateStageImageFillAmountSignal>(OnUpdateStageImageFillAmount);
-            _signalBus.Unsubscribe<OnUpdateStageIndexSignal>(OnUpdateStageIndex);
-            _signalBus.Unsubscribe<OnResetGameSignal>(OnResetGame);
+            _signalBus.Unsubscribe<LevelStartSignal>(OnLevelStart);
+            _signalBus.Unsubscribe<IncreaseScoreSignal>(OnIncreaseScore);
+            _signalBus.Unsubscribe<UpdateStageImageFillAmountSignal>(OnUpdateStageImageFillAmount);
+            _signalBus.Unsubscribe<ResetGameSignal>(OnResetGame);
+
+            _playerSignals.GetPlayerFishTypeSignal -= OnGetPlayerFishType;
         }
         
         private void OnDisable()
@@ -113,7 +130,10 @@ namespace Runtime.UISystem
         [Serializable]
         public struct Settings
         {
-            public List<int> stageValues;
+            public int[] StageValues;
+            public FishType[] PlayerTypes;
+            public Sprite[] FishEvolveSprites;
+            public Sprite[] FishIcons;
         }
     }
 }

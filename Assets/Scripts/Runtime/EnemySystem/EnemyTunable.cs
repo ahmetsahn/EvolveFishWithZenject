@@ -5,6 +5,8 @@ namespace Runtime.EnemySystem
     [Serializable]
     public struct EnemyTunable
     {
-        public int FishScore;
+        public int BlueFishScore;
+        public int RedFishScore;
+        public int BrownFishScore;
     }
 }

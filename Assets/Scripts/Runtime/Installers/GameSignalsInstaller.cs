@@ -1,3 +1,4 @@
+using Assets.Scripts.Runtime.Signals;
 using Runtime.Signals;
 using Zenject;
 
@@ -14,43 +15,47 @@ namespace Runtime.Installers
             UISignals();
             LevelSignals();
             InputSignals();
+            PlayerSignals();
         }
 
         private void CoreGameSignals()
         {
-            Container.DeclareSignal<OnChangeGameStatesSignal>();
-            Container.DeclareSignal<OnResetGameSignal>();
+            Container.DeclareSignal<ChangeGameStatesSignal>();
+            Container.DeclareSignal<ResetGameSignal>();
         }
         
         private void CoreUISignals()
         {
-            Container.DeclareSignal<OnOpenPanelSignal>();
-            Container.DeclareSignal<OnClosePanelSignal>();
-            Container.DeclareSignal<OnCloseAllPanelsSignal>();
+            Container.DeclareSignal<OpenPanelSignal>();
+            Container.DeclareSignal<ClosePanelSignal>();
+            Container.DeclareSignal<CloseAllPanelsSignal>();
         }
 
         private void UISignals()
         {
-            Container.DeclareSignal<OnSetNewLevelValueSignal>();
-            Container.DeclareSignal<OnIncreaseScoreSignal>();
-            Container.DeclareSignal<OnUpdateStageImageFillAmountSignal>();
-            Container.DeclareSignal<OnNextLevelButtonClickSignal>();
-            Container.DeclareSignal<OnRestartLevelButtonClickSignal>();
-            Container.DeclareSignal<OnQuitButtonClickSignal>();
+            Container.DeclareSignal<IncreaseScoreSignal>();
+            Container.DeclareSignal<UpdateStageImageFillAmountSignal>();
+            Container.DeclareSignal<NextLevelButtonClickSignal>();
+            Container.DeclareSignal<RestartLevelButtonClickSignal>();
+            Container.DeclareSignal<QuitButtonClickSignal>();
         }
 
         private void LevelSignals()
         {
-            Container.DeclareSignal<OnLevelStartSignal>();
-            Container.DeclareSignal<OnUpdateStageIndexSignal>();
-            Container.DeclareSignal<OnLevelDestroySignal>();
-            Container.DeclareSignal<OnNextLevelSignal>();
-            Container.DeclareSignal<OnRestartLevelSignal>();
+            Container.DeclareSignal<LevelStartSignal>();
+            Container.DeclareSignal<LevelDestroySignal>();
+            Container.DeclareSignal<NextLevelSignal>();
+            Container.DeclareSignal<RestartLevelSignal>();
         }
 
         private void InputSignals()
         {
-            Container.DeclareSignal<OnMouseLeftClickSignal>();
+            Container.DeclareSignal<MouseLeftClickSignal>();
+        }
+
+        private void PlayerSignals()
+        {
+            Container.DeclareSignal<EvolvePlayerSignal>();
         }
     }
 }

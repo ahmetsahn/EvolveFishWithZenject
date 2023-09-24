@@ -2,7 +2,7 @@ using Runtime.Keys;
 
 namespace Runtime.Signals
 {
-    public struct OnMouseLeftClickSignal
+    public struct MouseLeftClickSignal
     {
         public InputParams InputParams;
     }

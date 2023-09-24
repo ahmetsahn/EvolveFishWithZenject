@@ -28,21 +28,21 @@ namespace Runtime.UISystem
         
         private void SubscribeEvents()
         {
-            _signalBus.Subscribe<OnOpenPanelSignal>(OnOpenPanel);
-            _signalBus.Subscribe<OnClosePanelSignal>(OnClosePanel);
-            _signalBus.Subscribe<OnCloseAllPanelsSignal>(OnCloseAllPanels);
+            _signalBus.Subscribe<OpenPanelSignal>(OnOpenPanel);
+            _signalBus.Subscribe<ClosePanelSignal>(OnClosePanel);
+            _signalBus.Subscribe<CloseAllPanelsSignal>(OnCloseAllPanels);
         }
 
-        private void OnOpenPanel(OnOpenPanelSignal signal)
+        private void OnOpenPanel(OpenPanelSignal signal)
         {
             var panelType = signal.PanelType;
             var panelIndex = signal.PanelIndex;
 
-            OnClosePanel(new OnClosePanelSignal { PanelIndex = panelIndex });
+            OnClosePanel(new ClosePanelSignal { PanelIndex = panelIndex });
             _container.InstantiatePrefabResource(PANELS_PATH + panelType, layers[panelIndex]);
         }
 
-        private void OnClosePanel(OnClosePanelSignal signal)
+        private void OnClosePanel(ClosePanelSignal signal)
         {
             if (layers[signal.PanelIndex].childCount <= 0) return;
             Destroy(layers[signal.PanelIndex].GetChild(0).gameObject);
@@ -59,9 +59,9 @@ namespace Runtime.UISystem
 
         private void UnsubscribeEvents()
         {
-            _signalBus.Unsubscribe<OnOpenPanelSignal>(OnOpenPanel);
-            _signalBus.Unsubscribe<OnClosePanelSignal>(OnClosePanel);
-            _signalBus.Unsubscribe<OnCloseAllPanelsSignal>(OnCloseAllPanels);
+            _signalBus.Unsubscribe<OpenPanelSignal>(OnOpenPanel);
+            _signalBus.Unsubscribe<ClosePanelSignal>(OnClosePanel);
+            _signalBus.Unsubscribe<CloseAllPanelsSignal>(OnCloseAllPanels);
         }
         
         private void OnDisable()

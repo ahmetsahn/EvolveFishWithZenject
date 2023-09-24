@@ -49,7 +49,7 @@ namespace Runtime.LevelSystem
 
         private void Start()
         {
-            _signalBus.Fire(new OnLevelStartSignal()
+            _signalBus.Fire(new LevelStartSignal()
             {
                 LevelIndex = _currentLevelIndex
             });
@@ -57,14 +57,14 @@ namespace Runtime.LevelSystem
         
         private void SubscribeEvents()
         {
-            _signalBus.Subscribe<OnLevelStartSignal>(OnLevelStart);
-            _signalBus.Subscribe<OnLevelDestroySignal>(OnLevelDestroy);
-            _signalBus.Subscribe<OnNextLevelSignal>(OnNextLevel);
-            _signalBus.Subscribe<OnRestartLevelSignal>(OnRestartLevel);
-            _signalBus.Subscribe<OnResetGameSignal>(OnResetGame);
+            _signalBus.Subscribe<LevelStartSignal>(OnLevelStart);
+            _signalBus.Subscribe<LevelDestroySignal>(OnLevelDestroy);
+            _signalBus.Subscribe<NextLevelSignal>(OnNextLevel);
+            _signalBus.Subscribe<RestartLevelSignal>(OnRestartLevel);
+            _signalBus.Subscribe<ResetGameSignal>(OnResetGame);
         }
         
-        private void OnLevelStart(OnLevelStartSignal signal)
+        private void OnLevelStart(LevelStartSignal signal)
         {
             var levelPrefab = _levelLoaderCommand.Execute(signal.LevelIndex);
             _container.InjectGameObject(levelPrefab);
@@ -79,20 +79,20 @@ namespace Runtime.LevelSystem
         {
             _currentLevelIndex++;
             
-            _signalBus.Fire<OnResetGameSignal>();
+            _signalBus.Fire<ResetGameSignal>();
             
-            _signalBus.Fire(new OnChangeGameStatesSignal()
+            _signalBus.Fire(new ChangeGameStatesSignal()
             {
                 GameStates = GameStates.Playing
             });
             
-            _signalBus.Fire(new OnOpenPanelSignal()
+            _signalBus.Fire(new OpenPanelSignal()
             {
                 PanelType = UIPanelTypes.LevelPanel,
                 PanelIndex = 0
             });
             
-            _signalBus.Fire(new OnLevelStartSignal()
+            _signalBus.Fire(new LevelStartSignal()
             {
                 LevelIndex = _currentLevelIndex
             });
@@ -100,20 +100,20 @@ namespace Runtime.LevelSystem
         
         private void OnRestartLevel()
         {
-            _signalBus.Fire<OnResetGameSignal>();
+            _signalBus.Fire<ResetGameSignal>();
             
-            _signalBus.Fire(new OnChangeGameStatesSignal()
+            _signalBus.Fire(new ChangeGameStatesSignal()
             {
                 GameStates = GameStates.Playing
             });
             
-            _signalBus.Fire(new OnOpenPanelSignal()
+            _signalBus.Fire(new OpenPanelSignal()
             {
                 PanelType = UIPanelTypes.LevelPanel,
                 PanelIndex = 0
             });
             
-            _signalBus.Fire(new OnLevelStartSignal()
+            _signalBus.Fire(new LevelStartSignal()
             {
                 LevelIndex = _currentLevelIndex
             });
@@ -121,7 +121,7 @@ namespace Runtime.LevelSystem
         
         private void OnResetGame()
         {
-            _signalBus.Fire(new OnClosePanelSignal()
+            _signalBus.Fire(new ClosePanelSignal()
             {
                 PanelIndex = 1
             });
@@ -129,11 +129,11 @@ namespace Runtime.LevelSystem
         
         private void UnsubscribeEvents()
         {
-            _signalBus.Unsubscribe<OnLevelStartSignal>(OnLevelStart);
-            _signalBus.Unsubscribe<OnLevelDestroySignal>(OnLevelDestroy);
-            _signalBus.Unsubscribe<OnNextLevelSignal>(OnNextLevel);
-            _signalBus.Unsubscribe<OnRestartLevelSignal>(OnRestartLevel);
-            _signalBus.Unsubscribe<OnResetGameSignal>(OnResetGame);
+            _signalBus.Unsubscribe<LevelStartSignal>(OnLevelStart);
+            _signalBus.Unsubscribe<LevelDestroySignal>(OnLevelDestroy);
+            _signalBus.Unsubscribe<NextLevelSignal>(OnNextLevel);
+            _signalBus.Unsubscribe<RestartLevelSignal>(OnRestartLevel);
+            _signalBus.Unsubscribe<ResetGameSignal>(OnResetGame);
         }
         
         private void OnDisable()

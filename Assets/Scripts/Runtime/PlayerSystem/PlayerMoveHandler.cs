@@ -7,7 +7,7 @@ namespace Runtime.PlayerSystem
 {
     public class PlayerMoveHandler : IFixedTickable, IInitializable, IDisposable
     {
-        private readonly PlayerModel _playerModel;
+        private readonly PlayerView _playerView;
 
         private readonly PlayerMovementData _movementData;
         
@@ -15,21 +15,21 @@ namespace Runtime.PlayerSystem
         
         private Vector3 _mousePosition;
         public PlayerMoveHandler(
-            PlayerModel playerModel,
+            PlayerView playerView,
             PlayerMovementData movementData,
             SignalBus signalBus)
         {
-            _playerModel = playerModel;
+            _playerView = playerView;
             _movementData = movementData;
             _signalBus = signalBus;
         }
 
         private void Move()
         {
-            var position = _playerModel.Position;
+            var position = _playerView.Position;
             position = Vector3.Lerp(position, _mousePosition, _movementData.MoveSpeed * Time.fixedDeltaTime);
-            _playerModel.Position = position;
-            _playerModel.PlayerTransform.right = _mousePosition - position;
+            _playerView.Position = position;
+            _playerView.PlayerTransform.right = _mousePosition - position;
         }
 
         public void FixedTick()
@@ -44,17 +44,17 @@ namespace Runtime.PlayerSystem
         
         private void SubscribeEvents()
         {
-            _signalBus.Subscribe<OnMouseLeftClickSignal>(UpdateMousePosition);
+            _signalBus.Subscribe<MouseLeftClickSignal>(UpdateMousePosition);
         }
         
-        private void UpdateMousePosition(OnMouseLeftClickSignal signal)
+        private void UpdateMousePosition(MouseLeftClickSignal signal)
         {
             _mousePosition = signal.InputParams.MousePosition;
         }
         
         private void UnSubscribeEvents()
         {
-            _signalBus.Unsubscribe<OnMouseLeftClickSignal>(UpdateMousePosition);
+            _signalBus.Unsubscribe<MouseLeftClickSignal>(UpdateMousePosition);
         }
 
         public void Dispose()

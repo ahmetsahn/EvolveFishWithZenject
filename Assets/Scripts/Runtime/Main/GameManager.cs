@@ -31,10 +31,10 @@ namespace Runtime.Main
         
         private void SubscribeEvents()
         {
-            _signalBus.Subscribe<OnChangeGameStatesSignal>(OnChangeGameStates);
+            _signalBus.Subscribe<ChangeGameStatesSignal>(OnChangeGameStates);
         }
         
-        private void OnChangeGameStates(OnChangeGameStatesSignal signal)
+        private void OnChangeGameStates(ChangeGameStatesSignal signal)
         {
             GameStates = signal.GameStates;
 
@@ -45,9 +45,9 @@ namespace Runtime.Main
                 
                 case GameStates.Win:
                     
-                    _signalBus.Fire<OnLevelDestroySignal>();
-                    _signalBus.Fire<OnCloseAllPanelsSignal>();
-                    _signalBus.Fire(new OnOpenPanelSignal
+                    _signalBus.Fire<LevelDestroySignal>();
+                    _signalBus.Fire<CloseAllPanelsSignal>();
+                    _signalBus.Fire(new OpenPanelSignal
                     {
                         PanelType = UIPanelTypes.WinPanel, 
                         PanelIndex = 1
@@ -55,9 +55,9 @@ namespace Runtime.Main
                     break;
                 
                 case GameStates.Lose:
-                    _signalBus.Fire<OnLevelDestroySignal>();
-                    _signalBus.Fire<OnCloseAllPanelsSignal>();
-                    _signalBus.Fire(new OnOpenPanelSignal
+                    _signalBus.Fire<LevelDestroySignal>();
+                    _signalBus.Fire<CloseAllPanelsSignal>();
+                    _signalBus.Fire(new OpenPanelSignal
                     {
                         PanelType = UIPanelTypes.LosePanel, 
                         PanelIndex = 1
@@ -70,7 +70,7 @@ namespace Runtime.Main
         
         private void UnsubscribeEvents()
         {
-            _signalBus.Unsubscribe<OnChangeGameStatesSignal>(OnChangeGameStates);
+            _signalBus.Unsubscribe<ChangeGameStatesSignal>(OnChangeGameStates);
         }
         
         public void Dispose()

@@ -289,6 +289,11 @@ MonoBehaviour:
   - {fileID: 5388083902634543996}
   - {fileID: 7868785546730360476}
   - {fileID: 4052555299824926274}
+  fishIcons:
+  - {fileID: 5113940750379474085}
+  - {fileID: 1620585286552405213}
+  - {fileID: 7249633213473773302}
+  - {fileID: 8075264097039629747}
 --- !u!1 &3452815566520280224
 GameObject:
   m_ObjectHideFlags: 0
@@ -354,7 +359,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 17a3211ec984e1a4ab12fe9255ff2bf1, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -580,7 +585,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2eb2304e82b7c4649a55732a77a24760, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -962,7 +967,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 783d7b824ec79b047a681dcdb59f5045, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1268,7 +1273,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 03f1d6c5664378844b45a3c227e20647, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

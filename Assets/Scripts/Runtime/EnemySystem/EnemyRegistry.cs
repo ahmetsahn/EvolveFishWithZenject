@@ -32,7 +32,7 @@ namespace Runtime.EnemySystem
         
         private void SubscribeEvents()
         {
-            _signalBus.Subscribe<OnResetGameSignal>(OnResetGame);
+            _signalBus.Subscribe<ResetGameSignal>(OnResetGame);
         }
         
         private void OnResetGame()
@@ -45,7 +45,7 @@ namespace Runtime.EnemySystem
         
         private void UnsubscribeEvents()
         {
-            _signalBus.Unsubscribe<OnResetGameSignal>(OnResetGame);
+            _signalBus.Unsubscribe<ResetGameSignal>(OnResetGame);
         }
 
         public void Dispose()

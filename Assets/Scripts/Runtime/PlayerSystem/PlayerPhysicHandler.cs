@@ -1,5 +1,4 @@
-using Runtime.BaitSystem;
-using Runtime.Signals;
+using Runtime.Interfaces;
 using UnityEngine;
 using Zenject;
 
@@ -16,20 +15,9 @@ namespace Runtime.PlayerSystem
         
         public void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.TryGetComponent(out BaitFacade bait))
+            if (other.TryGetComponent(out IEatable eatable))
             {
-                _signalBus.Fire(new OnIncreaseScoreSignal()
-                {
-                    ScoreValue = bait.ScoreValue
-                });
-                
-                _signalBus.Fire(new OnUpdateStageImageFillAmountSignal()
-                {
-                    StageIndex = new OnUpdateStageIndexSignal().StageIndex,
-                    FillAmount = bait.ScoreValue
-                });
-                
-                bait.Destroy();
+                eatable.Eat();
             }
         }
     }

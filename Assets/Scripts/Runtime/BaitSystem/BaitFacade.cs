@@ -1,10 +1,12 @@
 using System;
+using Runtime.Interfaces;
+using Runtime.Signals;
 using UnityEngine;
 using Zenject;
 
 namespace Runtime.BaitSystem
 {
-    public class BaitFacade : MonoBehaviour, IPoolable<IMemoryPool>, IDisposable
+    public class BaitFacade : MonoBehaviour, IPoolable<IMemoryPool>, IDisposable, IEatable
     {
         private IMemoryPool _pool;
         
@@ -18,6 +20,8 @@ namespace Runtime.BaitSystem
         
         private BaitPhysicHandler _baitPhysicHandler;
         
+        private SignalBus _signalBus;
+        
         
         [Inject]
         public void Construct(
@@ -25,13 +29,15 @@ namespace Runtime.BaitSystem
             BaitRegistry baitRegistry, 
             BaitDestroyHandler baitDestroyHandler,
             BaitTunable baitTunable,
-            BaitPhysicHandler baitPhysicHandler)
+            BaitPhysicHandler baitPhysicHandler,
+            SignalBus signalBus)
         {
             _baitView = baitView;
             _baitRegistry = baitRegistry;
             _baitDestroyHandler = baitDestroyHandler;
             _baitTunable = baitTunable;
             _baitPhysicHandler = baitPhysicHandler;
+            _signalBus = signalBus;
         }
 
         private void OnTriggerEnter2D(Collider2D other)
@@ -43,11 +49,6 @@ namespace Runtime.BaitSystem
         {
             get => _baitView.Position;
             set => _baitView.Position = value;
-        }
-
-        public int ScoreValue
-        {
-            get => _baitTunable.BaitScore;
         }
         
         public void OnDespawned()
@@ -72,10 +73,25 @@ namespace Runtime.BaitSystem
         {
             _baitDestroyHandler.Destroy();
         }
-        
+
+        public void Eat()
+        {
+            _signalBus.Fire(new IncreaseScoreSignal()
+            {
+                ScoreValue = _baitTunable.BaitScore
+            });
+                
+            _signalBus.Fire(new UpdateStageImageFillAmountSignal()
+            {
+                FillAmount = _baitTunable.BaitScore
+            });
+
+            Destroy();
+        }
+
         public class Factory : PlaceholderFactory<BaitFacade>
         {
-            
+
         }
     }
 }

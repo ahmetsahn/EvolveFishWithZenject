@@ -2,12 +2,12 @@ using Runtime.Main;
 
 namespace Runtime.Signals
 {
-    public struct OnChangeGameStatesSignal
+    public struct ChangeGameStatesSignal
     {
         public GameStates GameStates;
     }
     
-    public struct OnResetGameSignal
+    public struct ResetGameSignal
     {
         
     }

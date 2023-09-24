@@ -17,7 +17,7 @@ namespace Runtime.EnemySystem
         
         public void Move()
         {
-            _enemyView.Position += _enemyView.Direction * _enemyMoveData.Speed * Time.deltaTime;
+            _enemyView.Position += _enemyMoveData.Speed * Time.deltaTime * _enemyView.Direction;
         }
         
         public void FixedTick()

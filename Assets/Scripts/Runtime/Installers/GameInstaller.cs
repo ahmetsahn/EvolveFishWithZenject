@@ -1,4 +1,5 @@
 using System;
+using Assets.Scripts.Runtime.Signals;
 using Runtime.AudioSystem;
 using Runtime.BaitSystem;
 using Runtime.EnemySystem;
@@ -32,7 +33,7 @@ namespace Runtime.Installers
             
             Container.BindFactory<EnemyFacade, EnemyFacade.Factory>()
                 .FromPoolableMemoryPool<EnemyFacade, EnemyFacadePool>(poolBinder => poolBinder
-                    .WithInitialSize(10)
+                    .WithInitialSize(20)
                     .FromSubContainerResolve()
                     .ByNewPrefabInstaller<EnemyInstaller>(_settings.ChooseEnemyFacadePrefab)
                     .UnderTransformGroup("Enemies"));
@@ -44,6 +45,8 @@ namespace Runtime.Installers
             Container.BindInterfacesAndSelfTo<EnemyRegistry>().AsSingle();
             
             GameSignalsInstaller.Install(Container);
+
+            Container.Bind<PlayerSignals>().AsSingle();
             
         }
         

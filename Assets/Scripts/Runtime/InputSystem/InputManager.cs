@@ -36,7 +36,7 @@ namespace Runtime.InputSystem
             var mousePosition = mouseRay.origin;
             mousePosition.z = 0;
                 
-            _signalBus.Fire(new OnMouseLeftClickSignal()
+            _signalBus.Fire(new MouseLeftClickSignal()
             {
                 InputParams = new InputParams()
                 {

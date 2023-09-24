@@ -2,18 +2,18 @@ using Runtime.Enums;
 
 namespace Runtime.Signals
 {
-    public struct OnOpenPanelSignal
+    public struct OpenPanelSignal
     {
         public UIPanelTypes PanelType;
         public int PanelIndex;
     }
     
-    public struct OnClosePanelSignal
+    public struct ClosePanelSignal
     {
         public int PanelIndex;
     }
     
-    public struct OnCloseAllPanelsSignal
+    public struct CloseAllPanelsSignal
     {
         
     }

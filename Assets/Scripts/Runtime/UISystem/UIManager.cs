@@ -1,6 +1,4 @@
-using System;
 using Runtime.Enums;
-using Runtime.Main;
 using Runtime.Signals;
 using UnityEngine;
 using Zenject;
@@ -28,19 +26,19 @@ namespace Runtime.UISystem
         
         private void SubscribeEvents()
         {
-            _signalBus.Subscribe<OnNextLevelButtonClickSignal>(OnNextLevelButton);
-            _signalBus.Subscribe<OnRestartLevelButtonClickSignal>(OnRestartLevelButton);
-            _signalBus.Subscribe<OnQuitButtonClickSignal>(OnQuitButton);
+            _signalBus.Subscribe<NextLevelButtonClickSignal>(OnNextLevelButton);
+            _signalBus.Subscribe<RestartLevelButtonClickSignal>(OnRestartLevelButton);
+            _signalBus.Subscribe<QuitButtonClickSignal>(OnQuitButton);
         }
         
         private void OnNextLevelButton()
         {
-            _signalBus.Fire(new OnNextLevelSignal());
+            _signalBus.Fire<NextLevelSignal>();
         }
         
         private void OnRestartLevelButton()
         {
-            _signalBus.Fire(new OnRestartLevelSignal());
+            _signalBus.Fire<RestartLevelSignal>();
         }
         
         private void OnQuitButton()
@@ -50,14 +48,14 @@ namespace Runtime.UISystem
         
         private void UnsubscribeEvents()
         {
-            _signalBus.Unsubscribe<OnNextLevelButtonClickSignal>(OnNextLevelButton);
-            _signalBus.Unsubscribe<OnRestartLevelButtonClickSignal>(OnRestartLevelButton);
-            _signalBus.Unsubscribe<OnQuitButtonClickSignal>(OnQuitButton);
+            _signalBus.Unsubscribe<NextLevelButtonClickSignal>(OnNextLevelButton);
+            _signalBus.Unsubscribe<RestartLevelButtonClickSignal>(OnRestartLevelButton);
+            _signalBus.Unsubscribe<QuitButtonClickSignal>(OnQuitButton);
         }
         
         private void OnOpenLevelPanel()
         {
-            _signalBus.Fire(new OnOpenPanelSignal
+            _signalBus.Fire(new OpenPanelSignal
             {
                 PanelType = UIPanelTypes.LevelPanel, 
                 PanelIndex = 0

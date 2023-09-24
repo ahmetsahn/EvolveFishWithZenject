@@ -1,4 +1,5 @@
 using System;
+using Assets.Scripts.Runtime.Signals;
 using Runtime.Signals;
 using Zenject;
 
@@ -6,15 +7,15 @@ namespace Runtime.PlayerSystem
 {
     public class PlayerRendererHandler : IInitializable, IDisposable
     {
-        private readonly PlayerModel _playerV;
+        private readonly PlayerView _playerViev;
         
         private readonly SignalBus _signalBus;
         
         public PlayerRendererHandler(
-            PlayerModel playerV,
+            PlayerView playerViev,
             SignalBus signalBus)
         {
-            _playerV = playerV;
+            _playerViev = playerViev;
             _signalBus = signalBus;
         }
         
@@ -25,17 +26,24 @@ namespace Runtime.PlayerSystem
         
         private void SubscribeEvents()
         {
-            _signalBus.Subscribe<OnMouseLeftClickSignal>(UpdateFlip);
+            _signalBus.Subscribe<MouseLeftClickSignal>(OnMouseLeftClick);
+            _signalBus.Subscribe<EvolvePlayerSignal>(OnEvolvePlayer);
         }
         
-        public void UpdateFlip(OnMouseLeftClickSignal signal)
+        public void OnMouseLeftClick(MouseLeftClickSignal signal)
         {
-            _playerV.SpriteRenderer.flipY = signal.InputParams.MousePosition.x < _playerV.Position.x;
+            _playerViev.SpriteRenderer.flipY = signal.InputParams.MousePosition.x < _playerViev.Position.x;
+        }
+
+        public void OnEvolvePlayer(EvolvePlayerSignal signal)
+        {
+            _playerViev.SpriteRenderer.sprite = signal.Sprite;
         }
         
         private void UnSubscribeEvents()
         {
-            _signalBus.Unsubscribe<OnMouseLeftClickSignal>(UpdateFlip);
+            _signalBus.Unsubscribe<MouseLeftClickSignal>(OnMouseLeftClick);
+            _signalBus.Unsubscribe<EvolvePlayerSignal>(OnEvolvePlayer);
         }
 
         public void Dispose()

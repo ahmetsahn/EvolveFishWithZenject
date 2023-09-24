@@ -29,13 +29,32 @@ MonoBehaviour:
     MinY: -3
     MaxY: 4
   levelPanelSettings:
-    stageValues: 0a0000001900000064000000
+  - StageValues: 0a0000001900000064000000
+    PlayerTypes: 00000000020000000200000003000000
+    FishEvolveSprites:
+    - {fileID: 21300000, guid: cea53c608b2cc904b90a2025d34809b2, type: 3}
+    - {fileID: 21300000, guid: 6db10063b3bbdd745926efe165db8ec7, type: 3}
+    FishIcons:
+    - {fileID: 21300000, guid: 2797ae00e12f78647999777f5b97f26d, type: 3}
+    - {fileID: 21300000, guid: cea53c608b2cc904b90a2025d34809b2, type: 3}
+    - {fileID: 21300000, guid: 6db10063b3bbdd745926efe165db8ec7, type: 3}
+    - {fileID: 21300000, guid: 03f1d6c5664378844b45a3c227e20647, type: 3}
+  - StageValues: 1400000032000000c8000000
+    PlayerTypes: 00000000020000000100000003000000
+    FishEvolveSprites:
+    - {fileID: 21300000, guid: cea53c608b2cc904b90a2025d34809b2, type: 3}
+    - {fileID: 21300000, guid: 6db10063b3bbdd745926efe165db8ec7, type: 3}
+    FishIcons:
+    - {fileID: 21300000, guid: 53159b51db8db274c8c8a0509b866d4f, type: 3}
+    - {fileID: 21300000, guid: cea53c608b2cc904b90a2025d34809b2, type: 3}
+    - {fileID: 21300000, guid: 6db10063b3bbdd745926efe165db8ec7, type: 3}
+    - {fileID: 21300000, guid: 03f1d6c5664378844b45a3c227e20647, type: 3}
   baitSettings:
     baitDestroyHandlerBaitDestroyData:
       DestroySound: {fileID: 8300000, guid: 7d7c0e65dacd54149aafa11f22c5974f, type: 3}
       DestroySoundVolume: 1
     baitTunable:
-      BaitScore: 100
+      BaitScore: 1
   playerSettings:
     PlayerMovementData:
       MoveSpeed: 3
@@ -46,4 +65,6 @@ MonoBehaviour:
     enemyMoveHandlerEnemyMoveData:
       Speed: 4
     EnemyTunable:
-      FishScore: 0
+      BlueFishScore: 2
+      RedFishScore: 4
+      BrownFishScore: 10

@@ -1,3 +1,5 @@
+using Runtime.Enums;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Runtime.EnemySystem
@@ -6,7 +8,15 @@ namespace Runtime.EnemySystem
     {
         [SerializeField]
         private Transform enemyTransform;
-        
+
+        [SerializeField]
+        private FishType enemyFishType;
+
+        [SerializeField]
+        private FishType[] eatableFishTypes;
+
+        private Dictionary<FishType, int> _fishScoreDictionary = new();
+
         public Vector3 Position
         {
             get => enemyTransform.position;
@@ -18,11 +28,23 @@ namespace Runtime.EnemySystem
             get => enemyTransform.right;
             set => enemyTransform.right = value;
         }
-        
-        public bool IsEatable
+
+        public FishType EnemyFishType
         {
-            get;
-            set;
+            get => enemyFishType;
+            set => enemyFishType = value;
+        }
+        
+        public FishType[] EatableFishTypes
+        {
+            get => eatableFishTypes;
+            set => eatableFishTypes = value;
+        }
+
+        public Dictionary<FishType, int> FishScoreDictionary
+        {
+            get => _fishScoreDictionary;
+            set => _fishScoreDictionary = value;
         }
     }
 }
