@@ -1,9 +1,9 @@
 using System;
-using Assets.Scripts.Runtime.Signals;
 using Runtime.AudioSystem;
 using Runtime.BaitSystem;
 using Runtime.EnemySystem;
 using Runtime.Main;
+using Runtime.Signals;
 using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
@@ -45,9 +45,6 @@ namespace Runtime.Installers
             Container.BindInterfacesAndSelfTo<EnemyRegistry>().AsSingle();
             
             GameSignalsInstaller.Install(Container);
-
-            Container.Bind<PlayerSignals>().AsSingle();
-            
         }
         
         

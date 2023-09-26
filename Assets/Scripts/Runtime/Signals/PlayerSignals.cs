@@ -1,13 +1,12 @@
-﻿using Runtime.Enums;
-using System;
-using System.Collections;
+﻿using System;
+using Runtime.Enums;
 using UnityEngine;
 
-namespace Assets.Scripts.Runtime.Signals
+namespace Runtime.Signals
 {
-    public class PlayerSignals
+    public struct GetPlayerFishTypeSignal
     {
-        public Func<FishType> GetPlayerFishTypeSignal;
+        public FishType FishType;
     }
 
     public struct EvolvePlayerSignal

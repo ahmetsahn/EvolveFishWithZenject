@@ -1,4 +1,3 @@
-using Assets.Scripts.Runtime.Signals;
 using Runtime.Signals;
 using Zenject;
 
@@ -55,6 +54,7 @@ namespace Runtime.Installers
 
         private void PlayerSignals()
         {
+            Container.DeclareSignal<GetPlayerFishTypeSignal>();
             Container.DeclareSignal<EvolvePlayerSignal>();
         }
     }

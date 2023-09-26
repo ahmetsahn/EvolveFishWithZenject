@@ -30,7 +30,7 @@ MonoBehaviour:
     MaxY: 4
   levelPanelSettings:
   - StageValues: 0a0000001900000064000000
-    PlayerTypes: 00000000020000000200000003000000
+    PlayerTypes: 00000000020000000300000004000000
     FishEvolveSprites:
     - {fileID: 21300000, guid: cea53c608b2cc904b90a2025d34809b2, type: 3}
     - {fileID: 21300000, guid: 6db10063b3bbdd745926efe165db8ec7, type: 3}
@@ -40,7 +40,7 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 6db10063b3bbdd745926efe165db8ec7, type: 3}
     - {fileID: 21300000, guid: 03f1d6c5664378844b45a3c227e20647, type: 3}
   - StageValues: 1400000032000000c8000000
-    PlayerTypes: 00000000020000000100000003000000
+    PlayerTypes: 01000000020000000300000004000000
     FishEvolveSprites:
     - {fileID: 21300000, guid: cea53c608b2cc904b90a2025d34809b2, type: 3}
     - {fileID: 21300000, guid: 6db10063b3bbdd745926efe165db8ec7, type: 3}
@@ -57,7 +57,7 @@ MonoBehaviour:
       BaitScore: 1
   playerSettings:
     PlayerMovementData:
-      MoveSpeed: 3
+      MoveSpeed: 1
   enemySettings:
     enemyDestroyHandlerEnemyDestroyData:
       DestroySound: {fileID: 8300000, guid: 7d7c0e65dacd54149aafa11f22c5974f, type: 3}

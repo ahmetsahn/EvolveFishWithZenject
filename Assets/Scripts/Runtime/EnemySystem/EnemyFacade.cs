@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Scripts.Runtime.Signals;
 using Runtime.Enums;
 using Runtime.Interfaces;
 using Runtime.Main;
@@ -25,7 +24,7 @@ namespace Runtime.EnemySystem
         
         private SignalBus _signalBus;
 
-        private PlayerSignals _playerSignals;
+        private FishType _playerFishType;
 
 
         [Inject]
@@ -34,23 +33,36 @@ namespace Runtime.EnemySystem
             EnemyRegistry registry, 
             EnemyDestroyHandler destroyHandler,
             EnemyTunable tunable,
-            SignalBus signalBus,
-            PlayerSignals playerSignals)
+            SignalBus signalBus)
         {
             _enemyView = view;
             _enemyRegistry = registry;
             _enemyDestroyHandler = destroyHandler;
             _enemyTunable = tunable;
             _signalBus = signalBus;
-            _playerSignals = playerSignals;
+        }
+
+        private void Awake()
+        {
+            SubscribeEvents();
         }
 
         private void Start()
         {
-            SetDictionaryValues();
+            InitializeEnemyFishScores();
         }
 
-        private void SetDictionaryValues()
+        private void SubscribeEvents()
+        {
+            _signalBus.Subscribe<GetPlayerFishTypeSignal>(OnGetPlayerFishType);
+        }
+        
+        private void OnGetPlayerFishType(GetPlayerFishTypeSignal signal)
+        {
+            _playerFishType = signal.FishType;
+        }
+
+        private void InitializeEnemyFishScores()
         {
             _enemyView.FishScoreDictionary[FishType.Blue] = _enemyTunable.BlueFishScore;
             _enemyView.FishScoreDictionary[FishType.Red] = _enemyTunable.RedFishScore;
@@ -84,7 +96,7 @@ namespace Runtime.EnemySystem
         public void Eat()
         {
             if (_enemyView.EatableFishTypes
-                .Contains(_playerSignals.GetPlayerFishTypeSignal.Invoke()))
+                .Contains(_playerFishType))
             {
                 _signalBus.Fire(new ChangeGameStatesSignal()
                 {
@@ -103,9 +115,7 @@ namespace Runtime.EnemySystem
                 {
                     FillAmount = _enemyView.FishScoreDictionary[_enemyView.EnemyFishType]
                 });
-
                 
-
                 Destroy();
             }
         }
@@ -118,6 +128,16 @@ namespace Runtime.EnemySystem
         public void Destroy()
         {
             _enemyDestroyHandler.Destroy();
+        }
+        
+        private void UnsubscribeEvents()
+        {
+            _signalBus.Unsubscribe<GetPlayerFishTypeSignal>(OnGetPlayerFishType);
+        }
+
+        private void OnDestroy()
+        {
+            UnsubscribeEvents();
         }
 
         public class Factory : PlaceholderFactory<EnemyFacade>

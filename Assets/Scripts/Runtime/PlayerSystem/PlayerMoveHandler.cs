@@ -5,7 +5,7 @@ using Zenject;
 
 namespace Runtime.PlayerSystem
 {
-    public class PlayerMoveHandler : IFixedTickable, IInitializable, IDisposable
+    public class PlayerMoveHandler : ITickable, IInitializable, IDisposable
     {
         private readonly PlayerView _playerView;
 
@@ -32,7 +32,7 @@ namespace Runtime.PlayerSystem
             _playerView.PlayerTransform.right = _mousePosition - position;
         }
 
-        public void FixedTick()
+        public void Tick()
         {
             Move();
         }

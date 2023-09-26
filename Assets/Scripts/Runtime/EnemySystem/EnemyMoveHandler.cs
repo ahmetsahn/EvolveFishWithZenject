@@ -4,7 +4,7 @@ using Zenject;
 
 namespace Runtime.EnemySystem
 {
-    public class EnemyMoveHandler : IFixedTickable
+    public class EnemyMoveHandler : ITickable
     {
         private readonly EnemyView _enemyView;
         private readonly EnemyMoveData _enemyMoveData;
@@ -20,7 +20,7 @@ namespace Runtime.EnemySystem
             _enemyView.Position += _enemyMoveData.Speed * Time.deltaTime * _enemyView.Direction;
         }
         
-        public void FixedTick()
+        public void Tick()
         {
             Move();
         }

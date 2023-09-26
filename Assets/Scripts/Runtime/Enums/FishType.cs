@@ -6,6 +6,7 @@ namespace Runtime.Enums
     public enum FishType
     {
         Green,
+        Orange,
         Blue,
         Red,
         Brown

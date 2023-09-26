@@ -177,6 +177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9ea9a74b5b94cd2b75a3166b489cc35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerFishType: 0
 --- !u!114 &1572671909421324843
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -190,8 +191,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyTransform: {fileID: 752123291235595033}
-  enemyFishType: 1
-  eatableFishTypes: 00000000
+  enemyFishType: 2
+  eatableFishTypes: 0000000001000000
 --- !u!114 &609513371042661477
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Scripts.Runtime.Signals;
 using Runtime.Enums;
 using Runtime.Main;
 using Runtime.Signals;
@@ -16,6 +15,7 @@ namespace Runtime.UISystem
         [SerializeField] private Text levelText, scoreText;
 
         [SerializeField] private Image[] stageImages;
+        
         [SerializeField] private List<Image> fishIcons;
         
         private int _stageIndex;
@@ -23,20 +23,18 @@ namespace Runtime.UISystem
         private int _levelIndex;
 
         private SignalBus _signalBus;
-
-        private PlayerSignals _playerSignals;
         
         private Settings[] _settings;
         
         private const string LEVEL_TEXT = "Level : ";
         private const string SCORE_TEXT = "Score : ";
         
+        
         [Inject]
-        public void Construct(SignalBus signalBus, Settings[] settings, PlayerSignals playerSignals)
+        public void Construct(SignalBus signalBus, Settings[] settings)
         {
             _signalBus = signalBus;
             _settings = settings;
-            _playerSignals = playerSignals;
         }
         private void OnEnable()
         {
@@ -49,8 +47,6 @@ namespace Runtime.UISystem
             _signalBus.Subscribe<IncreaseScoreSignal>(OnIncreaseScore);
             _signalBus.Subscribe<UpdateStageImageFillAmountSignal>(OnUpdateStageImageFillAmount);
             _signalBus.Subscribe<ResetGameSignal>(OnResetGame);
-
-            _playerSignals.GetPlayerFishTypeSignal += OnGetPlayerFishType;
         }
         
         private void OnLevelStart(LevelStartSignal signal)
@@ -66,6 +62,11 @@ namespace Runtime.UISystem
             {
                 fishIcons[i].sprite = _settings[_levelIndex].FishIcons[i];
             }
+            
+            _signalBus.Fire(new GetPlayerFishTypeSignal()
+            {
+                FishType = _settings[_levelIndex].PlayerTypes[_stageIndex]
+            });
         }
         
         private void OnIncreaseScore(IncreaseScoreSignal signal)
@@ -95,8 +96,15 @@ namespace Runtime.UISystem
             {
                 Sprite = _settings[_levelIndex].FishEvolveSprites[_stageIndex]
             });
-
+            
             _stageIndex++;
+            
+            _signalBus.Fire(new GetPlayerFishTypeSignal()
+            {
+                FishType = _settings[_levelIndex].PlayerTypes[_stageIndex]
+            });
+            
+            Debug.Log(_settings[_levelIndex].PlayerTypes[_stageIndex]);
         }
         
         private void OnResetGame()
@@ -105,11 +113,11 @@ namespace Runtime.UISystem
             _scoreValue = 0;
             
             scoreText.text = SCORE_TEXT + _scoreValue;
-        }
-
-        private FishType OnGetPlayerFishType()
-        {
-            return _settings[_levelIndex].PlayerTypes[_stageIndex];
+            
+            _signalBus.Fire(new GetPlayerFishTypeSignal()
+            {
+                FishType = _settings[_levelIndex].PlayerTypes[_stageIndex]
+            });
         }
         
         private void UnsubscribeEvents()
@@ -118,8 +126,6 @@ namespace Runtime.UISystem
             _signalBus.Unsubscribe<IncreaseScoreSignal>(OnIncreaseScore);
             _signalBus.Unsubscribe<UpdateStageImageFillAmountSignal>(OnUpdateStageImageFillAmount);
             _signalBus.Unsubscribe<ResetGameSignal>(OnResetGame);
-
-            _playerSignals.GetPlayerFishTypeSignal -= OnGetPlayerFishType;
         }
         
         private void OnDisable()
